@@ -3,3 +3,5 @@ ebin/
 config/
 .erlang.mk/
 doctorworm.d
+_rel
+_build
