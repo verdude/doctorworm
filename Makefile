@@ -11,8 +11,9 @@ SP = 2
 BUILD_DEPS += relx
 include erlang.mk
 
-release_dir := /usr/local/src/doctorworm/_rel
+release_dir := /usr/local/src/doctorworm/_rel/doctorworm_release
 release_file := doctorworm_release-1.tar.gz
+rel_gz := $(release_dir)/$(release_file)
 
 .PHONY: fmt
 FMT = _build/erlang-formatter-master/fmt.sh
@@ -26,5 +27,6 @@ fmt: $(FMT)
 	$(if $(TO_FMT), $(FMT) $(TO_FMT))
 
 build:
+	rm -rf release
 	docker build -t doctorworm .
-	docker cp doctorworm:$(release_dir)/$(release_file) .
+	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm doctorworm cp $(rel_gz) /opt
