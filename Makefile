@@ -11,18 +11,20 @@ SP = 2
 BUILD_DEPS += relx
 include erlang.mk
 
+release_dir := /usr/local/src/doctorworm/_rel
+release_file := doctorworm_release-1.tar.gz
+
 .PHONY: fmt
 FMT = _build/erlang-formatter-master/fmt.sh
 $(FMT):
 	mkdir -p _build/
-	curl -f#SL 'https://codeload.github.com/fenollp/erlang-formatter/tar.gz/master' | tar xvz -C _build/
+	curl -fSL 'https://codeload.github.com/fenollp/erlang-formatter/tar.gz/master' | tar xvz -C _build/
 
-# Pick either this one to go through the whole project
 fmt: TO_FMT ?= .
-# Or this faster, incremental pass
-#fmt: TO_FMT ?= $(shell git --no-pager diff --name-only HEAD origin/master -- '*.app.src' '*.config' '*.config.script' '*.erl' '*.escript' '*.hrl')
 
 fmt: $(FMT)
 	$(if $(TO_FMT), $(FMT) $(TO_FMT))
-# Example:
-#   TO_FMT='src/a.erl include/b/hrl' make fmt
+
+build:
+	docker build -t doctorworm .
+	docker cp doctorworm:$(release_dir)/$(release_file) .
