@@ -27,7 +27,7 @@ fmt: $(FMT)
 	$(if $(TO_FMT), $(FMT) $(TO_FMT))
 
 build:
-	docker build -f Dockerfile.build -t verdude/doctorworm .
+	docker build -f Dockerfile --target=build -t verdude/doctorworm .
 
 copy-release:
 	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm doctorworm cp $(rel_gz) /opt
