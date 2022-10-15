@@ -1,3 +1,5 @@
 _rel
 _build
 .git
+Dockerfile
+*.tar.gz
