@@ -22,4 +22,5 @@ FROM ubuntu:jammy
 WORKDIR /opt/
 COPY --from=build /usr/local/src/doctorworm/_rel/doctorworm_release/doctorworm_release-1.tar.gz /opt/
 RUN tar xf doctorworm_release-1.tar.gz
+EXPOSE 22884
 CMD ["bin/doctorworm_release", "foreground"]

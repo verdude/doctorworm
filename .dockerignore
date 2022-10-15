@@ -3,3 +3,7 @@ _build
 .git
 Dockerfile
 *.tar.gz
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.git
+.gitignore
