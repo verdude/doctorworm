@@ -12,3 +12,8 @@ _rel
 .erlang.mk
 _build
 *.gz
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
