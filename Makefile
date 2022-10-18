@@ -34,3 +34,9 @@ copy-release:
 
 build-runner:
 	docker build -t verdude/run-doctorworm .
+
+.PHONY: distclean
+imgclean:
+	yes | docker system prune
+	docker rmi -f verdude/doctorworm
+	docker build -f verdude/run-doctorworm
