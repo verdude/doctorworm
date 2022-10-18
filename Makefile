@@ -30,7 +30,7 @@ build:
 	docker build -f Dockerfile --target=build -t verdude/dworm .
 
 copy-release:
-	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm dworm cp $(rel_gz) /opt
+	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm verdude/dworm cp $(rel_gz) /opt
 
 build-runner:
 	docker build -t verdude/run-dworm .
