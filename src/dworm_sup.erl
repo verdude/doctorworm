@@ -1,4 +1,4 @@
--module(doctorworm_sup).
+-module(dworm_sup).
 -behaviour(supervisor).
 
 -export([start_link/0]).

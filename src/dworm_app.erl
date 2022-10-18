@@ -1,4 +1,4 @@
--module(doctorworm_app).
+-module(dworm_app).
 -behaviour(application).
 
 -export([start/2]).
@@ -13,7 +13,7 @@ start(_Type, _Args) ->
     {ok, _} = cowboy:start_clear(http, [{port, 22884}], #{
                                                           env => #{dispatch => Dispatch}
                                                          }),
-    doctorworm_sup:start_link().
+    dworm_sup:start_link().
 
 stop(_State) ->
     ok = cowboy:stop_listener(http).

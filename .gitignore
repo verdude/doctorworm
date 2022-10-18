@@ -1,14 +1,12 @@
-deps/
-ebin/
-config/
-.erlang.mk/
-doctorworm.d
-_rel
-_build
-doctorworm_release-1.tar.gz
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.eunit
+deps
+ebin
+*.o
+*.beam
+*.plt
 erl_crash.dump
+.concrete/DEV_MODE
+.rebar
+_rel
+*.d
+.erlang.mk
