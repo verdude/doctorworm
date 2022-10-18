@@ -11,3 +11,4 @@ _rel
 *.d
 .erlang.mk
 _build
+*.gz
