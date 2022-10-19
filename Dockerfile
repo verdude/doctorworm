@@ -1,9 +1,5 @@
 FROM ubuntu:jammy AS erlj
-RUN apt-get update && apt-get install ca-certificates make curl git erlang -y --no-install-recommends
-RUN set -eux; \
-  curl -O https://s3.amazonaws.com/rebar3/rebar3; \
-  chmod 555 rebar3; \
-  install rebar3 /usr/local/bin/rebar3
+RUN apt-get update && apt-get install make git erlang -y --no-install-recommends
 
 
 FROM erlj AS base
@@ -20,7 +16,7 @@ FROM base as build
 RUN mkdir /usr/local/src/dworm
 WORKDIR /usr/local/src/dworm
 COPY . /usr/local/src/dworm
-RUN rebar3 tar
+RUN make
 
 FROM ubuntu:jammy
 WORKDIR /opt/
