@@ -3,3 +3,4 @@ deps
 _build
 ebin
 _rel
+*.d
