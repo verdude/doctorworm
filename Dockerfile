@@ -1,5 +1,5 @@
 FROM ubuntu:jammy AS erlj
-RUN apt-get update && apt-get install make git erlang -y --no-install-recommends
+RUN apt-get update && apt-get install ca-certificates make curl git erlang -y --no-install-recommends
 
 
 FROM erlj AS base

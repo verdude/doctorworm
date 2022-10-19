@@ -4,3 +4,8 @@ _build
 ebin
 _rel
 *.d
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
