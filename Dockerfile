@@ -20,7 +20,7 @@ RUN make
 
 FROM ubuntu:jammy
 WORKDIR /opt/
-COPY --from=build /usr/local/src/dworm/_build/default/rel/dworm_release/dworm_release-1.tar.gz /opt/
+COPY --from=build /usr/local/src/dworm/_rel/dworm_release/dworm_release-1.tar.gz /opt/
 RUN tar xf dworm_release-1.tar.gz && rm dworm_release-1.tar.gz
 EXPOSE 22884
 CMD ["bin/dworm_release", "foreground"]
