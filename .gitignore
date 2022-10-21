@@ -4,6 +4,7 @@ _build
 ebin
 _rel
 *.d
+*.gz
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
