@@ -54,7 +54,8 @@ forbidden({call, From}, forbidden, Req) ->
 
 authorized({call, From}, authorized, Req) ->
   case cowboy_req:read_body(Req, #{length => 8192, period => 1000}) of
-    {ok, _Data, _} ->
+    {ok, Data, _} ->
+      gen_server:cast(state, {update, Data}),
       stop_and_reply(From, 200, Req);
     {more, _, _} -> stop_and_reply(From, 403, Req)
   end.
