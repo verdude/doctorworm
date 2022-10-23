@@ -18,3 +18,10 @@ docker-build:
 .PHONY: copy-release
 copy-release:
 	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm verdude/dworm cp $(sfx_release_path) /opt
+
+.PHONY: install
+install:
+	install -D -m 644 env $(DESTDIR)/etc/dworm.d/env
+	install -D -m 644 dworm.service $(DESTDIR)/etc/dworm.d/dworm.service
+	install -D -m 511 dworm_release.run $(DESTDIR)/usr/bin/dworm.run
+	ln -sf /etc/dworm.d/dworm.service /etc/systemd/system/dworm.service

@@ -5,6 +5,7 @@ ebin
 _rel
 *.d
 *.gz
+*.run
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
