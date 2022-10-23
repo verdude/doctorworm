@@ -2,8 +2,8 @@
 -behavior(gen_statem).
 
 %% API.
--export([handle/1]).
--export([stop/0]).
+-export([update/1]).
+-export([read/1]).
 
 %% gen_statem.
 -export([callback_mode/0]).
@@ -16,14 +16,17 @@
 -export([authorized/3]).
 
 %% API.
-handle(Req) ->
+update(Req) ->
   case gen_statem:start({local, ?MODULE}, ?MODULE, Req, []) of
-    {ok, _} -> flow();
+    {ok, _} -> flow(update);
     _ -> null
   end.
 
-stop() ->
-  gen_statem:stop({local, ?MODULE}).
+read(Req) ->
+  case gen_statem:start({local, ?MODULE}, ?MODULE, Req, []) of
+    {ok, _} -> flow(read);
+    _ -> null
+  end.
 
 %% gen_statem.
 
@@ -45,7 +48,7 @@ accepted({call, From}, authenticate, Req) ->
   Auth = list_to_binary(os:getenv("DWORMKEY")),
   authorize(Auth, From, Req).
 
-forbidden({call, From}, forbidden, Req) ->
+forbidden({call, From}, _, Req) ->
   Req1 = cowboy_req:reply(403, Req),
   {stop_and_reply, normal, {reply, From, Req1}}.
 
@@ -54,17 +57,29 @@ authorized({call, From}, authorized, Req) ->
     {ok, Data, _} ->
       gen_server:cast(state, {update, Data}),
       stop_and_reply(From, 200, Req);
-    {more, _, _} -> stop_and_reply(From, 403, Req)
-  end.
+    {more, _, _} -> stop_and_reply(From, 413, Req)
+  end;
+authorized({call, From}, read, Req) ->
+  Data = gen_server:call(state, secrets),
+  stop_and_reply(From, 200, Data, Req).
 
 %% internal
 
-flow() ->
+flow(update) ->
   Status = gen_statem:call(?MODULE, authenticate),
-  gen_statem:call(?MODULE, Status).
+  gen_statem:call(?MODULE, Status);
+flow(read) ->
+  Action = case gen_statem:call(?MODULE, authenticate) of
+    authorized -> read;
+    forbidden -> forbidden
+  end,
+  gen_statem:call(?MODULE, Action).
 
 stop_and_reply(From, StatusCode, Req) ->
   Req1 = cowboy_req:reply(StatusCode, Req),
+  {stop_and_reply, normal, {reply, From, Req1}}.
+stop_and_reply(From, StatusCode, Data, Req) ->
+  Req1 = cowboy_req:reply(StatusCode, #{}, Data, Req),
   {stop_and_reply, normal, {reply, From, Req1}}.
 
 authorize(Auth, From, Req) when byte_size(Auth) > 0 ->

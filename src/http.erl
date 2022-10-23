@@ -3,10 +3,10 @@
 -export([init/2]).
 
 init(Req=#{method := <<"PUT">>}, _Opts) ->
-  Req1 = proc:handle(Req),
+  Req1 = proc:update(Req),
   {ok, Req1, #{}};
 init(Req0=#{method := <<"GET">>}, _Opts) ->
-  Req = cowboy_req:reply(200, #{}, state:read(secrets), Req0),
+  Req = proc:read(Req0),
   {ok, Req, #{}};
 init(Req0, _Opts) ->
   Req = cowboy_req:reply(200,
