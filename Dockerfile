@@ -16,7 +16,7 @@ FROM base as build
 RUN mkdir /usr/local/src/dworm
 WORKDIR /usr/local/src/dworm
 COPY . /usr/local/src/dworm
-RUN make
+RUN make SFX=1
 
 FROM ubuntu:jammy
 WORKDIR /opt/

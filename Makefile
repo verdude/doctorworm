@@ -9,6 +9,7 @@ BUILD_DEPS += relx
 include erlang.mk
 
 release_gzip_path := /usr/local/src/dworm/_rel/dworm_release/dworm_release-1.tar.gz
+sfx_release_path := /usr/local/src/dworm/_rel/dworm_release.run
 
 .PHONY: docker-build
 docker-build:
@@ -16,4 +17,4 @@ docker-build:
 
 .PHONY: copy-release
 copy-release:
-	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm verdude/dworm cp $(release_gzip_path) /opt
+	docker run -v $$PWD:/opt -e LOCAL_USER_ID=$(shell id -u $$USER) --rm verdude/dworm cp $(sfx_release_path) /opt

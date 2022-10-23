@@ -45,7 +45,7 @@ terminate(_Reason, _StateName, _StateData) ->
 %% machine.
 
 accepted({call, From}, authenticate, Req) ->
-  Auth = list_to_binary(os:getenv("DWORMKEY")),
+  Auth = list_to_binary(os:getenv("DWORMKEY", "")),
   authorize(Auth, From, Req).
 
 forbidden({call, From}, _, Req) ->
