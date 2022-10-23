@@ -7,7 +7,7 @@
 start(_Type, _Args) ->
     Dispatch = cowboy_router:compile([
                                       {'_', [
-                                             {"/", rev, []}
+                                             {"/", http, []}
                                             ]}
                                      ]),
     {ok, _} = cowboy:start_clear(http, [{port, 22884}], #{
