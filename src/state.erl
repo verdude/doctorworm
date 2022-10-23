@@ -10,9 +10,6 @@
 -export([init/1]).
 -export([handle_call/3]).
 -export([handle_cast/2]).
--export([handle_info/2]).
--export([terminate/2]).
--export([code_change/3]).
 
 %% API.
 
@@ -32,14 +29,4 @@ handle_call(secrets, _From, State) ->
   {reply, State, State}.
 
 handle_cast({update, Data}, _) ->
-  logger:notice(Data),
   {noreply, Data}.
-
-handle_info(_Info, State) ->
-  {noreply, State}.
-
-terminate(_Reason, _State) ->
-  ok.
-
-code_change(_OldVsn, State, _Extra) ->
-  {ok, State}.

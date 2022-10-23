@@ -43,10 +43,7 @@ terminate(_Reason, _StateName, _StateData) ->
 
 accepted({call, From}, authenticate, Req) ->
   Auth = list_to_binary(os:getenv("DWORMKEY")),
-  case Auth == cowboy_req:header(<<"authorization">>, Req) of
-    true -> {next_state, authorized, Req, {reply, From, authorized}};
-    false -> {next_state, forbidden, Req, {reply, From, forbidden}}
-  end.
+  authorize(Auth, From, Req).
 
 forbidden({call, From}, forbidden, Req) ->
   Req1 = cowboy_req:reply(403, Req),
@@ -63,11 +60,18 @@ authorized({call, From}, authorized, Req) ->
 %% internal
 
 flow() ->
-  case gen_statem:call(?MODULE, authenticate) of
-    authorized -> gen_statem:call(?MODULE, authorized);
-    forbidden -> gen_statem:call(?MODULE, forbidden)
-  end.
+  Status = gen_statem:call(?MODULE, authenticate),
+  gen_statem:call(?MODULE, Status).
 
 stop_and_reply(From, StatusCode, Req) ->
   Req1 = cowboy_req:reply(StatusCode, Req),
   {stop_and_reply, normal, {reply, From, Req1}}.
+
+authorize(Auth, From, Req) when byte_size(Auth) > 0 ->
+  case Auth == cowboy_req:header(<<"authorization">>, Req) of
+    true -> {next_state, authorized, Req, {reply, From, authorized}};
+    false -> {next_state, forbidden, Req, {reply, From, forbidden}}
+  end;
+authorize(_, From, Req) ->
+  logger:emergency("authorization is not configured."),
+  {next_state, forbidden, Req, {reply, From, forbidden}}.
