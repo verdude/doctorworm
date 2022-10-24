@@ -21,7 +21,6 @@ copy-release:
 
 .PHONY: install
 install:
-	install -D -m 644 dworm.service $(DESTDIR)/etc/dworm.d/dworm.service
+	install -D -m 644 dworm.service $(DESTDIR)/lib/systemd/system/dworm.service
+	install -D -m 644 .env.example $(DESTDIR)/etc/dworm.d/.service-env
 	install -D -m 511 _rel/dworm_release.run $(DESTDIR)/usr/bin/dworm.run
-	install -D -m 511 .env.example $(DESTDIR)/etc/dworm.d/.service-env
-	ln -sf /etc/dworm.d/dworm.service $(DESTDIR)/lib/systemd/system/dworm.service
