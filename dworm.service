@@ -2,7 +2,7 @@
 Description=dworm
 
 [Service]
-ExecStart=/usr/local/bin/dworm_release.run
+ExecStart=/usr/bin/dworm.run
 Restart=on-failure
 User=erra
 EnvironmentFile=/etc/dworm.d/.service-env
