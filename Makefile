@@ -23,5 +23,4 @@ copy-release:
 install:
 	install -D -m 644 env $(DESTDIR)/etc/dworm.d/env
 	install -D -m 644 dworm.service $(DESTDIR)/etc/dworm.d/dworm.service
-	install -D -m 511 dworm_release.run $(DESTDIR)/usr/bin/dworm.run
-	ln -sf /etc/dworm.d/dworm.service $(DESTDIR)/etc/systemd/system/dworm.service
+	install -D -m 511 _rel/dworm_release.run $(DESTDIR)/usr/bin/dworm.run
