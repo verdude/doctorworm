@@ -11,7 +11,8 @@ init(Req0=#{method := <<"GET">>}, _Opts) ->
 init(Req0=#{method := <<"OPTIONS">>}, _Opts) ->
   Req1 = cowboy_req:set_resp_headers(#{
                                           <<"access-control-allow-origin">> => <<"*">>,
-                                          <<"access-control-allow-methods">> => <<"GET, PUT">>
+                                          <<"access-control-allow-methods">> => <<"GET, PUT">>,
+                                          <<"access-control-allow-headers">> => <<"*">>
                                          }, Req0),
   Req = cowboy_req:reply(200, Req1),
   {ok, Req, #{}};
