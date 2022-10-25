@@ -6,6 +6,7 @@ ExecStart=/usr/bin/dworm_release.run
 Restart=on-failure
 User=erra
 EnvironmentFile=/etc/dworm.d/.service-env
+StandardInput=tty
 
 [Install]
 WantedBy=multi-user.target
