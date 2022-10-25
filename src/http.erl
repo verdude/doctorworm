@@ -9,7 +9,7 @@ init(Req0=#{method := <<"GET">>}, _Opts) ->
   Req = proc:read(Req0),
   {ok, Req, #{}};
 init(Req0=#{method := <<"OPTIONS">>}, _Opts) ->
-  Req = cowboy_req:set_response_headers(#{
+  Req = cowboy_req:set_resp_headers(#{
                                           <<"access-control-allow-origin">> => <<"*">>,
                                           <<"access-control-allow-methods">> => <<"GET, PUT">>
                                          }, Req0),
